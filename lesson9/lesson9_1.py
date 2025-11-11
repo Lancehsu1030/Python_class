@@ -7,11 +7,10 @@ def get_asset_path(filename: str) -> str:
     current_dir = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(current_dir, 'assets', filename)
 
-def get_names(file_name: str) -> list[str]:
+def get_names(file_path: str) -> list[str]:
     """
-    傳入檔案名稱,讀取assets內的txt,並且轉換txt成為list,並傳出
-    """
-    file_path = get_asset_path(file_name)
+    傳入檔案路徑,讀取assets內的txt,並且轉換txt成為list,並傳出
+    """   
     
     try:
         with open(file_path, encoding="utf-8") as file:
@@ -42,14 +41,14 @@ def get_scores(names: list[str], num: int = 10) -> list[dict]:
         scores.append(info)
     return scores
     
-def save_csv(students: list[dict], filename: str) -> None:
+def save_csv(students: list[dict], file_path: str) -> None:
     """將學生資料儲存為 CSV 檔案"""
     if not students:
         print("警告:沒有學生資料可儲存")
         return
     
     fieldnames = students[0].keys()
-    file_path = get_asset_path(filename)
+    
 
     try:
         with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
@@ -57,12 +56,14 @@ def save_csv(students: list[dict], filename: str) -> None:
             writer.writeheader()
             for d in students:
                 writer.writerow(d)
-        print(f"成功儲存 {len(students)} 筆資料到 {filename}")
+        print(f"成功儲存 {len(students)} 筆資料到 {file_path}")
     except Exception as e:
         print(f"儲存檔案時發生錯誤: {e}")
 
 def main():
-    names: list[str] = get_names("names.txt")
+    file_path = get_asset_path("names.txt")
+
+    names: list[str] = get_names(file_path)
     
     if not names:
         print("無法讀取名單,程式結束")
@@ -78,7 +79,8 @@ def main():
         return
     
     students: list[dict] = get_scores(names, num=num)
-    save_csv(students, 'students.csv')
+    file_path = get_asset_path('students.csv')
+    save_csv(students, file_path)
 
 if __name__ == '__main__':
     main()
