@@ -41,4 +41,5 @@ def main():
     students = get_scores(names,num=num)
     save_csv(students,'students.csv')
 
-main()
+if __name__ == '__main__':
+   main()
