@@ -65,7 +65,13 @@ def get_datafolder_files() -> list[str]:
             file_list.append(f)
     return file_list
 def main():
-    print("Hello Lesson 19")
+    # 取得所有每年乘客資料檔案名稱
+    data_list:list[str] = get_datafolder_files()
+    all_years_data = []
+    for year_file in data_list:
+        year_DataFrame = merge_station_passenger_data(year_file)
+        all_years_data.append(year_DataFrame)
 
+    print(len(all_years_data))
 if __name__ == "__main__":
     main()
