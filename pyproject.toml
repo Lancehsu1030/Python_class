@@ -17,4 +17,5 @@ dependencies = [
     "wget>=3.2",
     "yfinance>=0.2.66",
     "google-genai",
+    "line-bot-sdk>=3.21.0",
 ]
